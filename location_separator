@@ -15,7 +15,7 @@ countryid CHAR(2),
 city VARCHAR2(30),
 state VARCHAR2(30));
 
-INSERT ALL
+INSERT FIRST
 WHEN COUNTRY_ID = 'CA' THEN
 INTO canadian_locations (locationid, countryid, city, province) VALUES (location_id, country_id, city, state_province)
 WHEN COUNTRY_ID <> 'CA' THEN
