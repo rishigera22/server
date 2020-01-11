@@ -1,0 +1,27 @@
+/*Using the Location table, sort the canadian Locations in one table and the international ones in another, 
+have provinces in the canadian table and states in international*/
+
+CREATE TABLE canadian_locations (
+
+locationid NUMBER,
+countryid CHAR(2),
+city VARCHAR2(30),
+province VARCHAR2(30));
+
+CREATE TABLE international_locations (
+
+locationid NUMBER,
+countryid CHAR(2),
+city VARCHAR2(30),
+state VARCHAR2(30));
+
+INSERT ALL
+WHEN COUNTRY_ID = 'CA' THEN
+INTO canadian_locations (locationid, countryid, city, province) VALUES (location_id, country_id, city, state_province)
+WHEN COUNTRY_ID <> 'CA' THEN
+INTO international_locations (locationid, countryid, city, state) VALUES (location_id, country_id, city, state_province)
+
+SELECT location_id, country_id,city, state_province, postal_code FROM hr.locations;
+
+SELECT * FROM canadian_locations;
+SELECT * FROM international_locations;
