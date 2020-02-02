@@ -144,8 +144,6 @@ if hit == "y":
 else:
   print('player cards are',player_draw[0:2])
   
-
-
 print('Result is:',player_total,player_result)
 print()
 print('Ace drawn?',player_ace_drawn)
@@ -164,6 +162,9 @@ print('---------------------------------')
 winner = 'unknown'
 
 if player_result == dealer_result and player_result !='Stay' and dealer_result !='Stay':
+  winner = 'Draw'
+
+elif player_result == dealer_result and player_total == dealer_total:
   winner = 'Draw'
 
 elif player_result == 'Bust':
