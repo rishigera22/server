@@ -83,12 +83,27 @@ if card_f == 'A':
 
 #Player Total
 
-player_total = card_a + card_b + card_c
+player_total = card_a + card_b
 
 if player_ace_drawn == 'Y' and player_total <=11:
   player_total += 10 
 elif player_ace_drawn == 'Y' and player_total >11:
   player_total += 1
+
+#Player hit or stay
+
+
+print('Player Starting off with',player_draw[0:2])
+print('total is',card_a+card_b)
+print('hit?')
+
+hit = input()
+
+if hit == "y":
+  player_total = card_a + card_b + card_c
+  
+else:
+  player_total = card_a + card_b
 
 #Dealer Total
 
@@ -124,7 +139,13 @@ if dealer_total < 21:
 #Final Comparison
 
 #Player Final Result
-print('player cards are',player_draw)
+if hit == "y":
+  print('player cards are',player_draw)
+else:
+  print('player cards are',player_draw[0:2])
+  
+
+
 print('Result is:',player_total,player_result)
 print()
 print('Ace drawn?',player_ace_drawn)
@@ -164,3 +185,4 @@ elif player_total < dealer_total:
   winner = 'Dealer'
 
 print('winner is:',winner)
+
