@@ -1,0 +1,66 @@
+from random import shuffle
+card_list = ['A',2,3,4,5,6,7,8,9,10,'J','K','Q']
+shuffle(card_list)
+
+card_draw = card_list[0:3]
+print(card_draw)
+card_a = card_list[0]
+card_b = card_list[1]
+card_c = card_list[2]
+ace_drawn = 'N'
+face_card_drawn = 'N'
+player_result = 'Unknown'
+
+# Face Cards 
+if card_draw[0] in ['J','K','Q']: 
+  card_a = 10
+  face_card_drawn = 'Y'
+
+
+if card_draw[1] in ['J','K','Q']: 
+  card_b = 10
+  face_card_drawn = 'Y'
+
+
+if card_draw[2] in ['J','K','Q']: 
+  card_c = 10
+  face_card_drawn = 'Y'
+
+
+#Aces
+
+if card_draw[0] in ['A']: 
+  card_a = 0
+  ace_drawn = 'Y'
+
+if card_draw[1] in ['A']: 
+  card_b = 0
+  ace_drawn = 'Y'
+
+if card_draw[2] in ['A']: 
+  card_c = 0
+  ace_drawn = 'Y'
+
+total = card_a + card_b + card_c
+
+if ace_drawn == 'Y' and total <=11:
+  total += 10 
+elif ace_drawn == 'Y' and total >11:
+  total += 1
+
+#player result
+
+if total > 21:
+  player_result = 'Bust'
+
+if total == 21:
+  player_result = 'Blackjack'
+
+if total < 21:
+  player_result = 'Stay'
+
+print()
+print('Player Result is:',total,player_result)
+print()
+print('Ace drawn?',ace_drawn)
+print('Face Card Drawn?', face_card_drawn)
