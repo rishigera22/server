@@ -1,0 +1,49 @@
+import random
+
+cards = ['Car','Goat #1','Goat #2']
+random.shuffle(cards)
+
+user_choice = int(input('input a number from 1 - 3 Your Choice:'))
+
+translated_choice = int(user_choice - 1)
+computer_choice = int(translated_choice - 1)
+
+choice_switch = input('do you want to change your choice y/n:')
+
+if(choice_switch) == 'y':
+  final_choice = int(computer_choice - 1)
+else:
+  final_choice = translated_choice
+
+scenario_1 = cards[translated_choice]
+user_result = cards[final_choice]
+computer_result = cards[computer_choice]
+
+if(user_result) !='Car' and computer_result!= 'Car':
+  outcome = 'Draw'
+elif user_result == 'Car':
+  outcome = 'Win'
+else:
+  outcome = 'Lose'
+
+print(outcome)
+
+if scenario_1 == 'Car' and outcome != 'Win':
+  recap = 'You screwed yourself'
+elif scenario_1 != 'Car' and choice_switch == 'y' and outcome == 'Lose':
+  recap = 'Man you suck'
+elif scenario_1 == 'Car' and outcome == 'Win':
+  recap = 'Way to stand your ground'
+elif scenario_1 != 'Car' and outcome == 'Win':
+   recap = 'Slick Work'
+else:
+  recap = 'Tiebreaker Time'
+
+
+print()
+print('User First Got - '+ scenario_1)
+print('Choice to Switch was - ' + choice_switch)
+print('Final User Result was - '+ user_result)
+print('Computer Got ' + computer_result)
+print('final recap - ' + recap)
+
