@@ -3,13 +3,13 @@ import sys
 
 # List of the current shooters, their status (Alive/Dead), # of shots fired and Rank(0,1,2) or placement in the list
 
-current_status = [['Shooter #1','Alive',0,0],['Shooter #2','Alive',0,1],['Shooter #3','Alive',0,2]]
+current_status = [['Shooter #1', 'Alive', 0, 0], ['Shooter #2', 'Alive', 0, 1], ['Shooter #3', 'Alive', 0, 2]]
 
-# Number of hits/misses each shooter gets 
+# Number of hits/misses each shooter gets
 
-s1 = ['Hit','Miss','Miss']
-s2 = ['Hit','Hit','Miss']
-s3 = ['Hit','Hit','Hit']
+s1 = ['Hit', 'Miss', 'Miss']
+s2 = ['Hit', 'Hit', 'Miss']
+s3 = ['Hit', 'Hit', 'Hit']
 
 # Shuffle is to randomize the order of hits and misses for each shooter
 
@@ -20,12 +20,11 @@ random.shuffle(s3)
 # Number of Rounds
 round = 0
 
-
 # Determining if the shot will be a hit or a miss, First list is for shooter 1 all the way to shooter 3
 
-shot_sequence = [s1]+[s2]+[s3]
+shot_sequence = [s1] + [s2] + [s3]
 
-#First Round Target Selection
+# First Round Target Selection
 
 first_choice = int(input('pick your target 2 or 3: '))
 print()
@@ -37,17 +36,17 @@ print('Shooter #1 targets ' + first_target)
 # First Shot Outcome
 
 first_shot_outcome = shot_sequence[0][0]
-print('Result is a '+ first_shot_outcome)
-round +=1 
+print('Result is a ' + first_shot_outcome)
+round += 1
 
 # First Shot Consequences
 
 if first_shot_outcome == 'Miss':
-  first_shot_consequence = 'Alive'
-  first_shot_message = first_target + ' is Still Alive'
+    first_shot_consequence = 'Alive'
+    first_shot_message = first_target + ' is Still Alive'
 else:
-  first_shot_consequence = 'Deceased'
-  first_shot_message = first_target + ' is now Deceased'
+    first_shot_consequence = 'Deceased'
+    first_shot_message = first_target + ' is now Deceased'
 
 current_status[0][2] += 1
 current_status[target_choice][1] = first_shot_consequence
@@ -56,22 +55,22 @@ print(first_shot_message)
 
 # Second Shooter Selection
 
-for (shooter,status,shots,rank) in current_status:
-  if shots ==0 and status == 'Alive':
-    second_shooter = shooter
-    second_shooter_rank = rank
-    second_shooter_shots = shots
-    break
+for (shooter, status, shots, rank) in current_status:
+    if shots == 0 and status == 'Alive':
+        second_shooter = shooter
+        second_shooter_rank = rank
+        second_shooter_shots = shots
+        break
 
 print('Second Shooter is ' + second_shooter)
 
 # Second Round Target Selection
 
-for(shooter,status,shots,rank) in reversed(current_status):
-  if shooter != second_shooter and status != 'Deceased':
-    second_target = shooter
-    second_target_rank = rank
-    break
+for (shooter, status, shots, rank) in reversed(current_status):
+    if shooter != second_shooter and status != 'Deceased':
+        second_target = shooter
+        second_target_rank = rank
+        break
 
 print(second_shooter + ' targets ' + second_target)
 
@@ -79,160 +78,184 @@ print(second_shooter + ' targets ' + second_target)
 
 second_shot_outcome = shot_sequence[second_shooter_rank][second_shooter_shots]
 print('Result is a ' + second_shot_outcome)
-round +=1 
+round += 1
 
 # Second Shot Consequences
 
 if second_shot_outcome == 'Miss':
-  second_shot_consequence = 'Alive'
-  second_shot_message = second_target + ' is Still Alive'
+    second_shot_consequence = 'Alive'
+    second_shot_message = second_target + ' is Still Alive'
 else:
-  second_shot_consequence = 'Deceased'
-  second_shot_message = second_target + ' is now Deceased'
+    second_shot_consequence = 'Deceased'
+    second_shot_message = second_target + ' is now Deceased'
 
 current_status[second_shooter_rank][2] += 1
 current_status[second_target_rank][1] = second_shot_consequence
 
-
 print(second_shot_message)
-
 
 # Number of Surivors (before round 3)
 
 living_participant_count = 0
 
-for(shooter,status,shots,rank) in current_status:
-  if status == 'Alive':
-    living_participant_count += 1
-
+for (shooter, status, shots, rank) in current_status:
+    if status == 'Alive':
+        living_participant_count += 1
 
 # Smallest number of shots fired
 
 shots_list = []
-for(shooter,status,shots,rank) in current_status:
-  if shooter != second_shooter and status == 'Alive':
-    shots_list.append(shots)
+for (shooter, status, shots, rank) in current_status:
+    if shooter != second_shooter and status == 'Alive':
+        shots_list.append(shots)
 
 if not shots_list:
-  round_3_continue = 'N'
+    round_3_continue = 'N'
 else:
-  min_shots = min(shots_list)
+    min_shots = min(shots_list)
 
 # Round 3 Continue
 
 if living_participant_count > 1:
-  round_3_continue = 'Y'
+    round_3_continue = 'Y'
 
 else:
-  print(second_shooter + ' Wins')
-  print('# of Rounds - ' + str(round))
+    print(second_shooter + ' Wins')
+    print('# of Rounds - ' + str(round))
 
 # Round 3 Shooter
 
 if round_3_continue == 'Y':
-  for (shooter,status,shots,rank) in reversed(current_status):
-    if shooter != second_shooter and shots == min_shots and status == 'Alive':
-      third_shooter = shooter
-      third_shooter_rank = rank
-      third_shooter_shots = shots
-      print('Third Shooter is ' + third_shooter)
-      break
+    for (shooter, status, shots, rank) in reversed(current_status):
+        if shooter != second_shooter and shots == min_shots and status == 'Alive':
+            third_shooter = shooter
+            third_shooter_rank = rank
+            third_shooter_shots = shots
+            print('Third Shooter is ' + third_shooter)
+            break
 
 if round_3_continue == 'Y':
-  for (shooter,status,shots,rank) in reversed(current_status):
-    if shooter != third_shooter and status == 'Alive':
-      third_target = shooter
-      third_target_rank = rank
-      third_target_shots = shots
-      print(third_shooter + ' targets ' + third_target)
-      break
-
+    for (shooter, status, shots, rank) in reversed(current_status):
+        if shooter != third_shooter and status == 'Alive':
+            third_target = shooter
+            third_target_rank = rank
+            third_target_shots = shots
+            print(third_shooter + ' targets ' + third_target)
+            break
 
 # Third Shot Outcome
 
 
 if round_3_continue == 'Y':
-  third_shot_outcome = shot_sequence[third_shooter_rank][third_shooter_shots]
-  print('Result is a ' + third_shot_outcome)
-  round +=1 
+    third_shot_outcome = shot_sequence[third_shooter_rank][third_shooter_shots]
+    print('Result is a ' + third_shot_outcome)
+    round += 1
 
 # Third Shot Consequences
 
 if round_3_continue == 'Y':
-  if third_shot_outcome == 'Miss':
-    third_shot_consequence = 'Alive'
-    third_shot_message = third_target + ' is Still Alive'
-  else:
-    third_shot_consequence = 'Deceased'
-    third_shot_message = third_target + ' is now Deceased'
+    if third_shot_outcome == 'Miss':
+        third_shot_consequence = 'Alive'
+        third_shot_message = third_target + ' is Still Alive'
+    else:
+        third_shot_consequence = 'Deceased'
+        third_shot_message = third_target + ' is now Deceased'
 
 if round_3_continue == 'Y':
-  current_status[third_shooter_rank][2] += 1
-  current_status[third_target_rank][1] = third_shot_consequence
-  print(third_shot_message)
-  
-# Round 4 Continue, shooter/target selection 
+    current_status[third_shooter_rank][2] += 1
+    current_status[third_target_rank][1] = third_shot_consequence
+    print(third_shot_message)
+
+# Number of Surivors (before round 4)
+
+living_participant_count = 0
 
 if round_3_continue == 'Y':
-  living_participant_count = 0
-  for(shooter,status,shots,rank) in current_status:
-    if status == 'Alive':
-      living_participant_count += 1
-  
-  if living_participant_count >1:
-    fourth_shooter = third_target
-    fourth_shooter_rank = third_target_rank
-    fourth_shooter_shots = current_status[third_target_rank][2]
-
-    fourth_target = third_shooter
-    fourth_target_rank = third_shooter_rank
-    fourth_target_shots = current_status[third_shooter_rank][2]
-  
-    fourth_round_continue = 'Y'
-    print('Fourth shooter is ' + fourth_shooter)
-    print(fourth_shooter + ' targets '+ fourth_target)
-     
-  else:
-    print(third_shooter + ' wins')
-    fourth_round_continue = 'N' 
-    print('# of Rounds - ' + str(round))
-
-# Fourth Shot Outcome
-
-if round_4_continue == 'Y':
-  fourth_shot_outcome = shot_sequence[fourth_shooter_rank][fourth_shooter_shots]
-  print('Result is a ' + fourth_shot_outcome)
-  round +=1 
-
-# Fourth Shot Consequences
-
-if round_4_continue == 'Y':
-  if fourth_shot_outcome == 'Miss':
-    fourth_shot_consequence = 'Alive'
-    fourth_shot_message = fourth_target + ' is Still Alive'
-    round_5_continue = 'Y'
-  else:
-    fourth_shot_consequence = 'Deceased'
-    fourth_shot_message = fourth_target + ' is now Deceased'
-    round_5_continue = 'N'
-    
-
-if round_4_continue == 'Y':
-  current_status[fourth_shooter_rank][2] += 1
-  current_status[fourth_target_rank][1] = fourth_shot_consequence
-  print(fourth_shot_message)
+    for (shooter, status, shots, rank) in current_status:
+        if status == 'Alive':
+            living_participant_count += 1
 
 
-if round_5_continue == 'N':
-  print(fourth_shooter + ' Wins')
-  print('# of Rounds - ' + str(round))
+if round_3_continue == 'Y':
+    if living_participant_count > 1:
+        round_4_continue = 'Y'
+    else:
+        round_4_continue = 'N'
+        print(third_shooter + ' wins')
+        print('# of Rounds - ' + str(round))
 
-else:
-  fifth_shooter = fourth_target
-  fifth_target = fourth_shooter
-  round +=1 
-  print('Fifth shoooter is ' + fifth_shooter)
-  print('Result is a Hit')
-  print(fifth_target + ' is now deceased')
-  print(fifth_shooter + ' wins')
-  print('# of Rounds - ' + str(round))
+
+# Round 4 Shooter selection
+
+if round_3_continue == 'Y' and round_4_continue == 'Y':
+    for (shooter, status, shots, rank) in current_status:
+        if status == 'Alive' and shooter != third_shooter:
+            fourth_shooter = shooter
+            fourth_shooter_rank = rank
+            fourth_shooter_shots = shots
+    print('Fourth Shooter is ' + fourth_shooter)
+
+if round_3_continue == 'Y' and round_4_continue == 'Y':
+    for (shooter, status, shots, rank) in current_status:
+        if status == 'Alive' and shooter != fourth_shooter:
+            fourth_target = shooter
+            fourth_target_rank = rank
+            fourth_target_shots = shots
+    print(fourth_shooter + ' Targets ' + fourth_target)
+
+# Round 4 outcome
+
+if round_3_continue == 'Y' and round_4_continue == 'Y':
+    fourth_shot_outcome = shot_sequence[fourth_shooter_rank][fourth_shooter_shots]
+    print('Result is a ' + fourth_shot_outcome)
+    round += 1
+
+# Round 4 Consequences
+
+
+if round_3_continue == 'Y' and round_4_continue == 'Y':
+    if fourth_shot_outcome == 'Miss':
+        fourth_shot_consequence = 'Alive'
+        fourth_shot_message = fourth_target + ' is Still Alive'
+
+
+    else:
+        fourth_shot_consequence = 'Deceased'
+        fourth_shot_message = fourth_target + ' is now Deceased'
+
+
+
+if round_3_continue == 'Y' and round_4_continue == 'Y':
+    current_status[fourth_shooter_rank][2] += 1
+    current_status[fourth_target_rank][1] = fourth_shot_consequence
+    print(fourth_shot_message)
+
+
+# Number of Surivors (before round 5)
+
+living_participant_count = 0
+
+
+if round_3_continue == 'Y' and round_4_continue == 'Y':
+    for (shooter, status, shots, rank) in current_status:
+        if status == 'Alive':
+            living_participant_count += 1
+
+
+if round_3_continue == 'Y' and round_4_continue == 'Y':
+    if living_participant_count > 1:
+        round_5_continue = 'Y'
+    else:
+        round_5_continue = 'N'
+        print(fourth_shooter + ' wins')
+        print('# of Rounds - ' + str(round))
+
+
+if round_3_continue == 'Y' and round_4_continue == 'Y' and round_5_continue =='Y':
+    fifth_shooter = fourth_target
+    fifth_target = fourth_shooter
+    print('Fifth shooter is '+ fifth_shooter)
+    print(fifth_shooter + ' Targets ' + fifth_target)
+    print('Result is a Hit')
+    print(fifth_shooter + ' Wins')
+    print('# of Rounds - ' + str(round+1))
